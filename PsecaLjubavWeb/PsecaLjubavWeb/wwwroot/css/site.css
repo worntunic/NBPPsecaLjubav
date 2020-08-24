@@ -36,17 +36,68 @@ body {
     width: 100%;
     height: 100%;
 }
-
+.dog-card-info-row {
+    /*padding: 10px 5px;*/
+    margin: 0;
+}
+/*.dog-card-info-row.odd-row {
+    background-color: rgba(1,1,1,0.8);
+}
+.dog-card-info-row.even-row {
+    background-color: rgba(1,1,1,0.6);
+}*/
+.dog-card-info-label {
+    font-family: 'Work Sans', sans-serif;
+    font-style: italic;
+    font-size: 1.2em;
+    color: rgba(255,255,255, 0.4);
+    text-align: left;
+}
 .dog-card-info-text {
     font-family: 'Work Sans', sans-serif;
     font-style: italic;
     font-size: 1.2em;
+    opacity: 1;
+    color: rgb(0,0,0);
+    text-align: right;
 }
 .dog-card-title-row {
     position:relative;
 }
 .dog-card-manage-icon {
     position: absolute;
+    right:0%;
+    top:0%;
+    height: 100%;
+    padding:5px 5px;
+}
+.dog-card-manage-icon i {
     right: 2%;
-    top: 25%;
+    vertical-align: bottom;
+}
+.dog-card-manage-icon:hover {
+    background-color: rgb(104, 150, 137);
+}
+.dog-card-manage-icon:active {
+    background-color: rgb(92, 132, 122);
+}
+.new-dog-card {
+    border: 5px dashed rgb(178, 230, 212);
+    border-radius: 10px;
+    height:100%;
+}
+.new-dog-card:hover {
+    border: 5px dashed rgb(147, 220, 195);
+}
+.new-dog-card-plus-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    color: rgb(178, 230, 212);
+}
+.new-dog-card:hover .new-dog-card-plus-icon {
+    font-size: 2.2em;
+    color: rgb(147, 220, 195);
 }
