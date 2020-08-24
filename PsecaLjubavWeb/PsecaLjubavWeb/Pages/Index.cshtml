@@ -5,29 +5,41 @@
 }
 <div class="jumbotron d-flex align-items-center align-top align-self-md-center h-75">
     <div class="container text-center">
-        <div class="row text-center">
-            <div class="col-md-6 mx-auto">
-                <label for="username-input">Username</label>
-                <input type="text" class="form-control" id="username-input" aria-describedby="username-help" placeholder="Enter username">
-                <small id="username-help" class="form-text text-muted">Username must be at least 6 characters long.</small>
+        <form method="post">
+            <div class="row text-center">
+                <div class="col-md-6 mx-auto">
+                    <label asp-for="Username">Username</label>
+                    <input type="text" asp-for="Username" name="Username" class="form-control" id="username-input" aria-describedby="username-help" placeholder="Enter username">
+                    <small id="username-help" class="form-text text-muted">Username must be at least 6 characters long.</small>
+                </div>
             </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-md-6 mx-auto">
-                <label for="password-input">Password</label>
-                <input type="password" class="form-control" id="password-input" aria-describedby="password-help" placeholder="Enter password">
-                <small id="password-help" class="form-text text-muted">Password must be at least 6 characters long.</small>
+            <div class="row text-center">
+                <div class="col-md-6 mx-auto">
+                    <label asp-for="Password">Password</label>
+                    <input type="password" asp-for="Password" name="Password" class="form-control" id="password-input" aria-describedby="password-help" placeholder="Enter password">
+                    <small id="password-help" class="form-text text-muted">Password must be at least 6 characters long.</small>
+                </div>
             </div>
-        </div>
-        <div class="row spacer"></div>
-        <div class="row text-center">
-            <div class="mx-auto">
-                <button type="button" class="btn btn-primary btn-lg mr-md-5">Login</button>
-                <button type="button" class="btn btn-primary btn-lg ml-md-5">Register</button>
+            <div class="row spacer"></div>
+            <div class="row text-center">
+                <div class="mx-auto">
+                    <button type="submit" asp-page-handler="login" class="btn btn-primary btn-lg mr-md-5">Login</button>
+                    <button type="submit" asp-page-handler="register" class="btn btn-primary btn-lg ml-md-5">Register</button>
+                </div>
             </div>
-        </div>
+        </form>
+        @if (Model.HasErrorMessage)
+        {
+            <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header">Error</div>
+                <div class="card-body">
+                    @*<h5 class="card-title">@Model.Message</h5>*@
+                    <p class="card-text">@Model.Message</p>
+                </div>
+            </div>
+        }
 
-        </div>
+    </div>
 </div>
 
 @*<div class="row">

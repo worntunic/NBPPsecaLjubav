@@ -8,8 +8,18 @@ namespace PsecaLjubavWeb.DB.Models
 {
     public class User
     {
-        public string username;
-        public string password;
+        public string Username { get; set; }
+        public string Password { get; set; }
+
+        public User()
+        {
+
+        }
+        public User(string username, string password)
+        {
+            this.Username = username;
+            this.Password = password;
+        }
     }
 
     public class UserResult
@@ -64,6 +74,10 @@ namespace PsecaLjubavWeb.DB.Models
             }
             return userResult.GetUser();
         }
+        public LoginStatus GetStatus()
+        {
+            return status;
+        }
     }
     public class RegistrationResult
     {
@@ -88,6 +102,10 @@ namespace PsecaLjubavWeb.DB.Models
             }
             return userResult.GetUser();
         }
+        public RegistrationStatus GetStatus()
+        {
+            return status;
+        }
     }
     public class UserController : BaseController
     {
@@ -110,13 +128,17 @@ namespace PsecaLjubavWeb.DB.Models
                 return new RegistrationResult(RegistrationResult.RegistrationStatus.PasswordTooShort);
             }
             string passHash = GetPasswordHash(password);
-            var results = graphClient.Cypher.Create($"(user:User{{username:'{username}', password:'{passHash}'}})")
-                                            .Return(user => user.As<User>()).Results;
-            if (results.Count() != 1)
+            User newUser = new User(username, passHash);
+
+            graphClient.Cypher
+                .Create("(user:User{newUser})")
+                .WithParam("newUser", newUser)
+                .ExecuteWithoutResults();
+            /*if (results.Count() != 1)
             {
                 throw new ControllerException($"Error during user registration");
-            }
-            return new RegistrationResult(new UserResult(results.First()));
+            }*/
+            return new RegistrationResult(new UserResult(newUser));
         }
 
         public LoginResult LoginUser(string username, string password)
@@ -127,7 +149,7 @@ namespace PsecaLjubavWeb.DB.Models
                 return new LoginResult(LoginResult.LoginStatus.InvalidUser);
             }
             string passHash = GetPasswordHash(password);
-            if (userResult.GetUser().password != passHash)
+            if (userResult.GetUser().Password != passHash)
             {
                 return new LoginResult(LoginResult.LoginStatus.InvalidPassword);
             }
@@ -136,14 +158,13 @@ namespace PsecaLjubavWeb.DB.Models
 
         public UserResult GetUser(string username)
         {
-            var results = graphClient.Cypher.Match($"(user:User {{username:'{username}'}})")
-                                .Return(user => user.As<User>()).Results;       
+            var results = graphClient.Cypher
+                .Match("(user:User {Username: {wantedUsername}})")
+                //.OptionalMatch("user {username: {wantedUsername}}")
+                .WithParam("wantedUsername", username)
+                .Return(user => user.As<User>()).Results;       
 
-            if (results.Count() >= 2)
-            {
-                throw new ControllerException($"Found two users with the same username: ${username}");
-            }
-            if (results.Count() == 0)
+            if (results == null || results.Count() == 0)
             {
                 return new UserResult(UserResult.UserResultStatus.NOTFOUND);
             }

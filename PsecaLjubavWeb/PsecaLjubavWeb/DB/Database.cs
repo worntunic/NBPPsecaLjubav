@@ -10,15 +10,28 @@ namespace PsecaLjubavWeb.DB
 
     public class Database : IDisposable
     {
-        private readonly GraphClient client;
-        private const string uri = "bolt://localhost:7687";
+        private readonly IGraphClient client;
+        private const string uri = "bolt://localhost:7687/db/data";
         private const string username = "neo4j";
-        private const string password = "password";
-
+        private const string password = "password123";
 
         public Database()
         {
-            client = new GraphClient(new Uri(uri), username, password);
+            client = new BoltGraphClient(uri, username, password);
+            Connect();
+
+        }
+        public IGraphClient GetGraphClient()
+        {
+            if (!client.IsConnected)
+            {
+                Connect();
+            }
+            return client;
+        }
+
+        private void Connect()
+        {
             try
             {
                 client.Connect();
@@ -29,7 +42,6 @@ namespace PsecaLjubavWeb.DB
             }
         }
 
-        
         public void Dispose()
         {
             client.Dispose();

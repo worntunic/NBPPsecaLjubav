@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Security.Claims;
+using PsecaLjubavWeb.DB.Models;
 
 namespace PsecaLjubavWeb
 {
@@ -29,10 +34,25 @@ namespace PsecaLjubavWeb
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                
             });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(options =>
+                    {
+                        options.Cookie.HttpOnly = true;
+                        //options.Cookie.SecurePolicy = Cookie.SecurePolicy.Always;
+                        options.Cookie.SameSite = SameSiteMode.Lax;
+                        options.Cookie.Name = "PsecaLjubav.AuthCookieAspNetCore";
+                        options.LoginPath = "/Home";
+                        options.LogoutPath = "/Home/Logout";
+                    });
 
+            services.AddMvc().AddRazorPagesOptions(options => {
+                options.Conventions.AuthorizeFolder("/User");
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton(db => new DB.Database());
+      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +70,9 @@ namespace PsecaLjubavWeb
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc();
         }

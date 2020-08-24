@@ -8,9 +8,9 @@ namespace PsecaLjubavWeb.DB
 {
     public class BaseController
     {
-        protected GraphClient graphClient;
+        protected IGraphClient graphClient;
 
-        public void Init(GraphClient graphClient)
+        public void Init(IGraphClient graphClient)
         {
             this.graphClient = graphClient;
         }
