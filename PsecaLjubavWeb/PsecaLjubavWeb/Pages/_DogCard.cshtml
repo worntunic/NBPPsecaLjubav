@@ -1,0 +1,29 @@
+﻿@model DB.Models.Dog
+@*
+
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div class="dog-card">
+        <div class="dog-card-title-row">
+            <div class="dog-card-name">@Model.Name</div>
+            <div class="dog-card-manage-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+        </div>
+
+        <div class="dog-card-image">
+            <img src="~/images/@Model.Image" />
+        </div>
+        <div class="dog-card-info">
+            <div class="dog-card-info-text dog-card-species">
+                @Model.Race
+            </div>
+            <div class="dog-card-info-text dog-card-sex">
+                @Model.GetSexAsReadableString()
+            </div>
+            <div class="dog-card-info-text dog-card-age">
+                @Model.GetDateAsReadableString()
+            </div>
+        </div>
+    </div>

@@ -20,26 +20,33 @@ body {
     padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.dog-card {
+    border: 1px solid rgba(0,0,0,0.6);
+    border-radius: 5px;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+.dog-card-name {
+    font-family: 'Work Sans', sans-serif;
+    font-style: italic;
+    font-size: 1.8em;
+}
+
+.dog-card-image img {
+    object-fit: cover;
     width: 100%;
+    height: 100%;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+.dog-card-info-text {
+    font-family: 'Work Sans', sans-serif;
+    font-style: italic;
+    font-size: 1.2em;
 }
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+.dog-card-title-row {
+    position:relative;
+}
+.dog-card-manage-icon {
+    position: absolute;
+    right: 2%;
+    top: 25%;
 }
