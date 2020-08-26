@@ -3,35 +3,35 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<div class="jumbotron d-flex align-items-center align-top align-self-md-center h-75">
+<div class="jumbotron d-flex align-items-center align-top align-self-md-center h-75 bkg-light-1">
     <div class="container text-center">
         <form method="post">
             <div class="row text-center">
                 <div class="col-md-6 mx-auto">
-                    <label asp-for="Username">Username</label>
-                    <input type="text" asp-for="Username" name="Username" class="form-control" id="username-input" aria-describedby="username-help" placeholder="Enter username">
-                    <small id="username-help" class="form-text text-muted">Username must be at least 6 characters long.</small>
+                    <label asp-for="Username">Korisničko ime</label>
+                    <input type="text" asp-for="Username" name="Username" class="form-control" id="username-input" aria-describedby="username-help" placeholder="Unesite korisiničko ime">
+                    <small id="username-help" class="form-text text-muted">Korisničko ime mora da bude duže od pet karaktera.</small>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-md-6 mx-auto">
-                    <label asp-for="Password">Password</label>
-                    <input type="password" asp-for="Password" name="Password" class="form-control" id="password-input" aria-describedby="password-help" placeholder="Enter password">
-                    <small id="password-help" class="form-text text-muted">Password must be at least 6 characters long.</small>
+                    <label asp-for="Password">Lozinka</label>
+                    <input type="password" asp-for="Password" name="Password" class="form-control" id="password-input" aria-describedby="password-help" placeholder="Unesite lozinku">
+                    <small id="password-help" class="form-text text-muted">Lozinka mora da bude duža od pet karaktera.</small>
                 </div>
             </div>
             <div class="row spacer"></div>
             <div class="row text-center">
                 <div class="mx-auto">
-                    <button type="submit" asp-page-handler="login" class="btn btn-primary btn-lg mr-md-5">Login</button>
-                    <button type="submit" asp-page-handler="register" class="btn btn-primary btn-lg ml-md-5">Register</button>
+                    <button type="submit" asp-page-handler="login" class="btn bkg-dark-1 btn-lg mr-md-5">Login</button>
+                    <button type="submit" asp-page-handler="register" class="btn bkg-light-2 btn-lg ml-md-5">Registracija</button>
                 </div>
             </div>
         </form>
         @if (Model.HasErrorMessage)
         {
-            <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-                <div class="card-header">Error</div>
+            <div class="login-error-card card text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header">Greška</div>
                 <div class="card-body">
                     @*<h5 class="card-title">@Model.Message</h5>*@
                     <p class="card-text">@Model.Message</p>

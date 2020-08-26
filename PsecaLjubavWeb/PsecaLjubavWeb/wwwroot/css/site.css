@@ -7,6 +7,15 @@ body {
     height: 100%;
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: rgba(147, 220, 195, 0.2);
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(dropdown.ico) right / 20px no-repeat #fff;
+    padding-right: 20px;
 }
 
 .spacer {
@@ -19,7 +28,35 @@ body {
     padding-left: 15px;
     padding-right: 15px;
 }
+.login-error-card {
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.home-title-text {
+    font-family: 'Work Sans', sans-serif;
+    margin-bottom: 40px;
+}
+.user-pages-links-row {
+    margin-bottom:40px;
+    border: 2px solid rgb(147, 220, 195);
+    border-radius:5px;
+    padding:20px;
+}
+.user-page-link {
+    border: 2px solid rgb(104, 150, 137);
+    background-color: rgb(147, 220, 195);
+}
+.user-page-link:hover {
+    background-color: rgb(104, 150, 137);
+}
 
+.dog-cards-row {
+    margin-top: 20px;
+    height: 380px;
+}
 .dog-card {
     border: 1px solid rgba(0,0,0,0.6);
     border-radius: 5px;
@@ -30,11 +67,14 @@ body {
     font-style: italic;
     font-size: 1.8em;
 }
+.dog-card-image {
+    height: 250px;
+}
 
 .dog-card-image img {
     object-fit: cover;
     width: 100%;
-    height: 100%;
+    height:100%;
 }
 .dog-card-info-row {
     /*padding: 10px 5px;*/
@@ -66,13 +106,27 @@ body {
 }
 .dog-card-manage-icon {
     position: absolute;
-    right:0%;
-    top:0%;
+    right: 0%;
+    top: 0%;
     height: 100%;
-    padding:5px 5px;
+    padding: 5px 5px;
+    cursor: pointer;
 }
 .dog-card-manage-icon i {
     right: 2%;
+    vertical-align: bottom;
+}
+.dog-adopt-popover-icon {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    height: 100%;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+
+.dog-adopt-popover-icon i {
+    left: 2%;
     vertical-align: bottom;
 }
 .dog-card-manage-icon:hover {
@@ -84,7 +138,8 @@ body {
 .new-dog-card {
     border: 5px dashed rgb(178, 230, 212);
     border-radius: 10px;
-    height:100%;
+    height: 100%;
+    cursor: pointer;
 }
 .new-dog-card:hover {
     border: 5px dashed rgb(147, 220, 195);
@@ -100,4 +155,64 @@ body {
 .new-dog-card:hover .new-dog-card-plus-icon {
     font-size: 2.2em;
     color: rgb(147, 220, 195);
+}
+/*Dog Popup*/
+.dog-edit-popup {
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+.dog-edit-popup-bkg-tint {
+    width: 100vw;
+    height:100vh;
+    position: absolute;
+    margin-left: -50vw;
+    margin-top:-50vh;
+    left:50%;
+    top:50%;
+    opacity: 0.6;
+    z-index:-1;
+}
+
+.dog-edit-popup-close-btn {
+    position: absolute;
+    top:0;
+    right: 0;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.dog-edit-popup-close-btn i {
+    width: 100%;
+    height: 100%;
+}
+/*Adopt*/
+.adopt-dog-card-overlay {
+    position: absolute;
+    width: 89%;
+    height: 100%;
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity .25s ease-in-out;
+    cursor: pointer;
+}
+.adopt-dog-card-overlay:hover {
+    display: block;
+    background-color: rgba(178, 230, 212, 0.8);
+    opacity: 1;
+}
+
+.adopt-dog-card-overlay i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    color:transparent;
+}
+.adopt-dog-card-overlay:hover i {
+    color: rgb(255,255,255);
 }

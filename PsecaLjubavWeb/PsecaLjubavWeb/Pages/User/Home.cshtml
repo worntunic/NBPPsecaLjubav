@@ -7,15 +7,30 @@
 
 <div class="container text-center">
     <div class="row text-right">
-        <h1>Welcome, @Model.Username!</h1>
+        <h1 class="home-title-text">Dobrodošao, @Model.Username!</h1>
     </div>
-    <div class="row dog-cards-row">
-        @foreach (var dog in Model.Dogs)
+    <partial name="_UserLinks" model="new _UserLinksModel()" />
+    <div class="spacer"></div>
+    <div class="dog-rows-container">
+        @for (var i = 0; i < Model.Dogs.Count(); i++)
         {
-            <div class="col-md-3">
-                <partial name="_DogCard" model=dog>
-            </div>
+            var dog = Model.Dogs[i];
+            if (i % 4 == 0)
+            {
+                @:<div class="row dog-cards-row">
+                }
+                <div class="col-md-3">
+                    <partial name="_DogCard" model=@dog />
+                </div>
+                if (i % 4 == 3)
+                {
+                @:</div>
+            }
         }
+        @if (Model.Dogs.Count() % 4 == 0)
+        {
+            @:<div class="row dog-cards-row">
+            }
         <div class="col-md-3">
             <div class="dog-card new-dog-card">
                 <div class="new-dog-card-plus-icon">
@@ -25,3 +40,9 @@
         </div>
     </div>
 </div>
+<partial name="_EditDogPopup" model="@Model" />
+</div>
+<form id="confirmadoptdog-form" method="post" asp-page-handler="AdoptDog">
+    <input type="hidden" asp-for="AdoptionDogID" name="AdoptionDogID" id="adoptiondogid-input" />
+    <input type="hidden" asp-for="AdoptionConfirmed" name="AdoptionConfirmed" id="adoptionconfirmed-input" />
+</form>

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PsecaLjubavWeb.DB.Models;
 using System;
@@ -25,8 +27,7 @@ namespace PsecaLjubavWeb.Pages.PageControllers
             string username = claims?.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
             if (!string.IsNullOrEmpty(username))
             {
-                UserController userController = new UserController();
-                userController.Init(db.GetGraphClient());
+                UserController userController = new UserController(db);
                 UserResult uResult = userController.GetUser(username);
                 if (uResult.GetStatus() == UserResult.UserResultStatus.FOUND)
                 {
@@ -34,6 +35,12 @@ namespace PsecaLjubavWeb.Pages.PageControllers
                 }
             }
             return null;
+        }
+
+        public async Task<ActionResult> OnPostLogoutAsync()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToPage("/Index");
         }
     }
 }

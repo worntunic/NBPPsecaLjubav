@@ -1,0 +1,51 @@
+﻿@model DB.Models.Dog
+@*
+
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="dog-card" data-id="@Model.ID" data-name="@Model.Name" data-race="@Model.Race" data-sex="@Model.Sex" data-birthdate="@Model.BirthDate" data-image="@Model.Image" data-adoption="@Model.UpForAdoption">
+        
+    <div class="adopt-dog-card-overlay">
+        <i class="fas fa-heart"></i>
+    </div>
+    <div class="adopt-dog-card-overlay">
+        <i class="fas fa-heart"></i>
+    </div>
+    <div class="dog-card-title-row bkg-light-1 text-center">
+        <div class="dog-card-name">@Model.Name</div>
+        @*<div class="dog-card-manage-icon bkg-light-2">
+            <i class="fas fa-cog"></i>
+        </div>*@
+    </div>
+
+    <div class="dog-card-image">
+        <img src="~/uploads/@Model.Image" />
+    </div>
+    <div class="dog-card-info">
+        <div class="row dog-card-info-row">
+            <div class="col-md-6 dog-card-info-label bkg-dark-1">
+                Rasa
+            </div>
+            <div class="col-md-6 dog-card-info-text dog-card-race bkg-light-1">
+                @Model.Race
+            </div>
+        </div>
+        <div class="row dog-card-info-row ">
+            <div class="col-md-6 dog-card-info-label bkg-dark-2">
+                Pol
+            </div>
+            <div class="col-md-6 dog-card-info-text dog-card-race bkg-light-2">
+                @Model.GetSexAsReadableString()
+            </div>
+        </div>
+        <div class="row dog-card-info-row">
+            <div class="col-md-6 dog-card-info-label bkg-dark-1">
+                Starost
+            </div>
+            <div class="col-md-6 dog-card-info-text dog-card-race bkg-light-1">
+                @Model.GetDateAsReadableString()
+            </div>
+        </div>
+    </div>
+</div>

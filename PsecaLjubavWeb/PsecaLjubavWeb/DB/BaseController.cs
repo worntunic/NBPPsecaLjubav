@@ -10,9 +10,8 @@ namespace PsecaLjubavWeb.DB
     {
         protected IGraphClient graphClient;
 
-        public void Init(IGraphClient graphClient)
-        {
-            this.graphClient = graphClient;
+        public BaseController(Database db) { 
+            this.graphClient = db.GetGraphClient();
         }
     }
     public class ControllerException : Exception

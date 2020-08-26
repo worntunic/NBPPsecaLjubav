@@ -8,17 +8,25 @@
     },
     {
       "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/dist/",
       "files": [
         "jquery.min.js",
         "jquery.js",
         "jquery.min.map"
-      ],
-      "destination": "wwwroot/lib/jquery/dist/"
+      ]
     },
     {
       "provider": "cdnjs",
       "library": "twitter-bootstrap@4.5.2",
       "destination": "wwwroot/lib/bootstrap/dist/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
+      "library": "popper.js@2.4.4",
+      "destination": "wwwroot/lib/popper.js/"
     }
   ]
 }

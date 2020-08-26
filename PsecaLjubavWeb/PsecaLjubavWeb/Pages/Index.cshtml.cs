@@ -31,8 +31,7 @@ namespace PsecaLjubavWeb.Pages
         public async Task<IActionResult> OnPostLogin()
         {
             //var user = configuration.GetSection("SiteUser").Get<SiteUser>();
-            UserController userController = new UserController();
-            userController.Init(db.GetGraphClient());
+            UserController userController = new UserController(db);
             LoginResult lResult = userController.LoginUser(Username, Password);
             if (lResult.GetStatus() == LoginResult.LoginStatus.LoginSuccess) { 
                 var claims = new List<Claim>
@@ -55,8 +54,7 @@ namespace PsecaLjubavWeb.Pages
             //var user = configuration.GetSection("SiteUser").Get<SiteUser>();
             /*UserController userController = configuration.GetSection("UserController").Get<UserController>();
             LoginResult lResult = userController.LoginUser(UserName, Password);*/
-            UserController userController = new UserController();
-            userController.Init(db.GetGraphClient());
+            UserController userController = new UserController(db);
             RegistrationResult rResult = userController.RegisterUser(Username, Password);
             if (rResult.GetStatus() == RegistrationResult.RegistrationStatus.RegistrationSuccess)
             {

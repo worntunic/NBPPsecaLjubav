@@ -1,0 +1,65 @@
+﻿@model PsecaLjubavWeb.Pages.User.HomeModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="dog-edit-popup" style="display:none">
+    <div class="dog-edit-popup-bkg-tint bkg-dark-1"></div>
+    <div class="jumbotron d-flex align-items-center align-top align-self-md-center h-75 bkg-light-1">
+        <div class="container text-center">
+            <div class="dog-edit-popup-close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+            <form method="post" asp-page-handler="EditDog" enctype="multipart/form-data">
+                <input type="hidden" asp-for="PopupDogID" name="PopupDogID" id="dogid-input" />
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        <label asp-for="PopupDogName">Ime psa</label>
+                        <input type="text" asp-for="PopupDogName" name="PopupDogName" class="form-control" id="dogname-input" aria-describedby="dogname-help" placeholder="Unesite ime psa">
+                        <!--<small id="dogname-help" class="form-text text-muted"></small>-->
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="PopupDogRace">Rasa</label>
+                        <input type="text" asp-for="PopupDogRace" name="PopupDogRace" class="form-control" id="dograce-input" aria-describedby="dograce-help" placeholder="Unesite rasu psa">
+                        <!--<small id="dogname-help" class="form-text text-muted"></small>-->
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        <label asp-for="PopupDogBirthDate">Datum rođenja</label>
+                        <input type="date" asp-for="PopupDogBirthDate" name="PopupDogBirthDate" class="form-control" id="dogbirthdate-input" aria-describedby="dogbirthdate-help" placeholder="Unesite datum rođenja psa">
+                        <!--<small id="dogname-help" class="form-text text-muted"></small>-->
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="PopupDogSex">Pol</label>
+                        <select asp-for="PopupDogSex" name="PopupDogSex" class="form-control" id="dogsex-input">
+                            <option value="Female">Ženka</option>
+                            <option value="Male">Mužjak</option>
+                        </select>
+                        <!--<small id="dogname-help" class="form-text text-muted"></small>-->
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        <label asp-for="PopupDogUpForAdoption">Daje se na usvajanje</label>
+                        <input type="checkbox" asp-for="PopupDogUpForAdoption" name="PopupDogUpForAdoption" class="form-control" id="dogadoption-input" aria-describedby="dogadoption-help">
+                        <!--<small id="dogname-help" class="form-text text-muted"></small>-->
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="PopupDogImage">Slika</label>
+                        @*<input type="checkbox" asp-for="PopupDogChangeImage" checked="checked" class="form-control" id="dogchangeimage-input">*@
+                        <input type="file" asp-for="PopupDogImage" name="PopupDogImage" class="form-control-file" id="dogimage-input" />
+                        <input type="hidden" asp-for="PopupDogPrevImageName" name="PopupDogPrevImageName" id="dogprevimage-input" />
+                        <small id="dogname-help" class="form-text text-muted"></small>
+                    </div>
+                </div>
+                <div class="row spacer"></div>
+                <div class="row text-center">
+                    <div class="mx-auto">
+                        <button type="submit" class="btn bkg-dark-1 btn-lg mr-md-5">Snimi</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

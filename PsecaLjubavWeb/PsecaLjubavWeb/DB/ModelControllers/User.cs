@@ -112,6 +112,10 @@ namespace PsecaLjubavWeb.DB.Models
         private const int passwordMinLength = 4;
         private const int usernameMinLength = 4;
 
+        public UserController(Database db) : base(db)
+        {
+        }
+
         public RegistrationResult RegisterUser(string username, string password)
         {
 
