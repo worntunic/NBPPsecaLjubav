@@ -216,3 +216,9 @@ select {
 .adopt-dog-card-overlay:hover i {
     color: rgb(255,255,255);
 }
+
+.adopt-popover-contact-mail {
+    text-align: center;
+    margin: 5px;
+}
+

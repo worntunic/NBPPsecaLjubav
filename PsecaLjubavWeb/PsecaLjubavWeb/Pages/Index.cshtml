@@ -15,6 +15,13 @@
             </div>
             <div class="row text-center">
                 <div class="col-md-6 mx-auto">
+                    <label asp-for="Email">Mejl adresa</label>
+                    <input type="email" asp-for="Email" name="Email" class="form-control" id="email-input" aria-describedby="email-help" placeholder="Unesite mejl adresu">
+                    <small id="password-help" class="form-text text-muted">Mejl adresa će se koristi samo za kontakt prilikom udomljavanja pasa.</small>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6 mx-auto">
                     <label asp-for="Password">Lozinka</label>
                     <input type="password" asp-for="Password" name="Password" class="form-control" id="password-input" aria-describedby="password-help" placeholder="Unesite lozinku">
                     <small id="password-help" class="form-text text-muted">Lozinka mora da bude duža od pet karaktera.</small>

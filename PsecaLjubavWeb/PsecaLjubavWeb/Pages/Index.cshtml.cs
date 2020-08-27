@@ -27,6 +27,8 @@ namespace PsecaLjubavWeb.Pages
         public string Username { get; set; }
         [BindProperty, DataType(DataType.Password)]
         public string Password { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
         public string Message { get; set; }
         public async Task<IActionResult> OnPostLogin()
         {
@@ -55,7 +57,7 @@ namespace PsecaLjubavWeb.Pages
             /*UserController userController = configuration.GetSection("UserController").Get<UserController>();
             LoginResult lResult = userController.LoginUser(UserName, Password);*/
             UserController userController = new UserController(db);
-            RegistrationResult rResult = userController.RegisterUser(Username, Password);
+            RegistrationResult rResult = userController.RegisterUser(Username, Password, Email);
             if (rResult.GetStatus() == RegistrationResult.RegistrationStatus.RegistrationSuccess)
             {
                 var claims = new List<Claim>

@@ -39,9 +39,7 @@ namespace PsecaLjubavWeb.Pages.User
         public ActionResult OnPostAdoptDog()
         {
             DB.Models.User newOwner = GetCurrentUser(HttpContext);
-            Dog dog = new Dog();
-            dog.ID = AdoptDogID;
-            dogController.WantToAdopt(newOwner, dog);
+            dogController.WantToAdopt(newOwner, AdoptDogID);
             return new RedirectToPageResult("/User/Home");
         }
     }

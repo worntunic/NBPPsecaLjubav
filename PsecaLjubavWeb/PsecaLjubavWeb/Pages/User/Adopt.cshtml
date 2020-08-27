@@ -11,6 +11,18 @@
 <partial name="_UserLinks" model="new _UserLinksModel()" />
 <div class="spacer"></div>
 <div class="adopt-dogs-container dog-rows-container">
+    @if (Model.Dogs.Count() == 0)
+    {
+        <div class="row">
+            <h3 class="home-title-text">Nema dostupnih pasa :(</h3>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <h3 class="home-title-text">Napomena: ako odaberete psa za usvajanje, usvajate ga tek kada vlasnik potvrdi to.</h3>
+        </div>
+    }
     @for (var i = 0; i < Model.Dogs.Count(); i++)
     {
         var dog = Model.Dogs[i];

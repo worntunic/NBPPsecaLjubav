@@ -92,7 +92,7 @@ namespace PsecaLjubavWeb.DB.Models
             fullUploadsPath = Path.Combine(webRootPath, uploadsFolder);
         }
 
-        public async Task<Dog> EditDog(User owner, string name, string race, string birthDate, string sex, bool adoption, IFormFile image, string id, string prevImage)
+        public async Task<Dog> EditDog(User owner, string name, string race, string birthDate, string sex, bool adoption, string adopter, IFormFile image, string id, string prevImage)
         {
             //Create object
             Dog newDog = new Dog();
@@ -101,6 +101,7 @@ namespace PsecaLjubavWeb.DB.Models
             newDog.BirthDate = DateTime.Parse(birthDate);
             newDog.Sex = sex;
             newDog.UpForAdoption = adoption;
+            newDog.AdopterName = adopter;
             //Save to database
             if (id == (-1).ToString())
             {
@@ -148,6 +149,16 @@ namespace PsecaLjubavWeb.DB.Models
                         .Results;
             return results.ToList<Dog>();
         }
+        public Dog GetDog(User owner, string dogID)
+        {
+            var results = graphClient.Cypher
+                        .Match("(user:User)-[:LOVES]->(dog:Dog)")
+                        .Where((User user) => user.Username == owner.Username)
+                        .AndWhere((Dog dog) => dog.ID == dogID)
+                        .Return(dog => dog.As<Dog>())
+                        .Results;
+            return results.ToList<Dog>().First();
+        }
 
         public List<Dog> GetOtherPeoplesDogs(User owner, Dog filter)
         {
@@ -159,13 +170,15 @@ namespace PsecaLjubavWeb.DB.Models
             return results.ToList<Dog>();
         }
 
-        public void WantToAdopt(User newOwner, Dog adoptee)
+        public void WantToAdopt(User newOwner, string dogID)
         {
+            Dog adoptee = new Dog();
+            adoptee.ID = dogID;
             adoptee.UpForAdoption = false;
             adoptee.AdopterName = newOwner.Username;
             graphClient.Cypher
                         .Match("(dog: Dog)")
-                        .Where((Dog dog) => dog.ID == adoptee.ID)
+                        .Where((Dog dog) => dog.ID == adoptee.ID && dog.UpForAdoption == true)
                         .Set("dog.UpForAdoption = {upForAdoption}, dog.AdopterName = {adopterName}")
                         .WithParams(new
                         {
@@ -173,6 +186,38 @@ namespace PsecaLjubavWeb.DB.Models
                             adopterName = adoptee.AdopterName
                         })
             .ExecuteWithoutResults();
+        }
+
+        public void ConfirmAdoption(User oldOwner, Dog adoptee, bool confirm)
+        {
+            if (confirm)
+            {
+                graphClient.Cypher
+                    .Match("(owner: User)-[rel:LOVES]->(dog: Dog)", "(newOwner: User)")
+                    .Where((User owner) => owner.Username == oldOwner.Username)
+                    .AndWhere((User newOwner) => newOwner.Username == adoptee.AdopterName)
+                    .AndWhere((Dog dog) => dog.ID == adoptee.ID && dog.AdopterName == adoptee.AdopterName)
+                    .Merge("(newOwner)-[newRel:LOVES]->(dog)")
+                    .Set("dog.AdopterName = {adopterName}")
+                    .Delete("rel")
+                    .WithParam("adopterName", "")
+                    .ExecuteWithoutResults();
+            } else
+            {
+                bool adoption = true;
+                string adopter = "";
+                graphClient.Cypher
+                    .Match("(owner: User)-[rel:LOVES]->(dog: Dog)")
+                    .Where((User owner) => owner.Username == oldOwner.Username)
+                    .AndWhere((Dog dog) => dog.ID == adoptee.ID)
+                    .Set("dog.UpForAdoption = {upForAdoption}, dog.AdopterName = {emptyAdopter}")
+                    .WithParams(new
+                    {
+                        upForAdoption = adoption,
+                        emptyAdopter = adopter
+                    })
+                    .ExecuteWithoutResults();
+            }
         }
     }
 }

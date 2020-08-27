@@ -10,15 +10,17 @@ namespace PsecaLjubavWeb.DB.Models
     {
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Email { get; set; }
 
         public User()
         {
 
         }
-        public User(string username, string password)
+        public User(string username, string password, string email)
         {
             this.Username = username;
             this.Password = password;
+            this.Email = email;
         }
     }
 
@@ -116,7 +118,7 @@ namespace PsecaLjubavWeb.DB.Models
         {
         }
 
-        public RegistrationResult RegisterUser(string username, string password)
+        public RegistrationResult RegisterUser(string username, string password, string email)
         {
 
             if (GetUser(username).GetStatus() == UserResult.UserResultStatus.FOUND)
@@ -132,7 +134,7 @@ namespace PsecaLjubavWeb.DB.Models
                 return new RegistrationResult(RegistrationResult.RegistrationStatus.PasswordTooShort);
             }
             string passHash = GetPasswordHash(password);
-            User newUser = new User(username, passHash);
+            User newUser = new User(username, passHash, email);
 
             graphClient.Cypher
                 .Create("(user:User{newUser})")

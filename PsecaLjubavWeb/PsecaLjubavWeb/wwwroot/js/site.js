@@ -35,7 +35,8 @@
             sex: $parent.data("sex"),
             birthdate: $parent.data("birthdate"),
             image: $parent.data("image"),
-            adoption: ($parent.data("adoption").toLowerCase() == "true")
+            adoption: ($parent.data("adoption").toLowerCase() == "true"),
+            adopter: ($parent.data("adopter"))
         };
         console.log(dogValues);
         openDogEditWithValues(dogValues);
@@ -51,7 +52,9 @@
         $dogEditPopup.find("#dogsex-input").val(dogValues.sex);
         $dogEditPopup.find("#dograce-input").val(dogValues.race);
         $dogEditPopup.find("#dogadoption-input").prop("checked", dogValues.adoption);
+        $dogEditPopup.find("#dogadopter-input").val(dogValues.adopter);
         $dogEditPopup.find("#dogprevimage-input").val(dogValues.image);
+
         var parts = dogValues.birthdate.split(".");
         var date = new Date(parseInt(parts[2], 10),
             parseInt(parts[1], 10) - 1,
@@ -65,16 +68,25 @@
     $(".dog-adopt-popover-icon").on("click", function (event) {
         event.preventDefault();
         let $this = $(this);
+        if ($this.hasClass("has-popover")) {
+            return;
+        } else {
+            $this.addClass("has-popover");
+        }
         let $dogCard = $this.closest(".dog-card");
         let adopterName = $dogCard.data("adopter");
+        let adopterEmail = $dogCard.data("adopteremail");
         let dogID = $dogCard.data("id");
         let dogName = $dogCard.data("name")
         let headHtml = '';
         headHtml += '<div class="adopt-popover-head" class="hide">';
-        headHtml += adopterName + ' wants to adopt ' + dogName + '!';
+        headHtml += adopterName + ' želi da udomi ' + dogName + '!';
         headHtml += '</div>';
         let contentHtml = '';
         contentHtml += '<div class="adopt-popover-content" class="hide">';
+        contentHtml += '<div class="adopt-popover-contact-mail">';
+        contentHtml += '<a href="mailto:' + adopterEmail + '">Kontakt</a>';
+        contentHtml += '</div>';
         contentHtml += '<div class="row text-center adopt-popover-data-row" id="adopt-popover-' + dogID + '">';
         contentHtml += '<div class="col-md-6 mx-auto text-center">';
         contentHtml += '<div class="btn btn-success btn-sm adopt-confirm">';
@@ -98,6 +110,7 @@
                 return contentHtml;
             }
         });
+        $this.popover('show');
     });
     $(document).on("click", ".adopt-confirm", function (event) {
         event.preventDefault();
@@ -107,7 +120,7 @@
         console.log(dogID);
         $("#adoptiondogid-input").val(dogID);
         $("#adoptionconfirmed-input").val(true);
-        //$("#confirmadoptdog-form").submit();
+        $("#confirmadoptdog-form").submit();
     });
     $(document).on("click", ".adopt-deny", function (event) {
         event.preventDefault();
@@ -116,7 +129,7 @@
         dogID = dogID.substring("adopt-popover-".length);
         $("#adoptiondogid-input").val(dogID);
         $("#adoptionconfirmed-input").val(false);
-        //$("#confirmadoptdog-form").submit();
+        $("#confirmadoptdog-form").submit();
     });
     //Adopt
     $(".adopt-dog-card-overlay").on("click", function (event) {
